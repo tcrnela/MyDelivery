@@ -6,6 +6,7 @@ import com.tcrnela.delivery.dto.OrderResponseDto;
 import com.tcrnela.delivery.entity.Menu;
 import com.tcrnela.delivery.entity.Order;
 import com.tcrnela.delivery.entity.User;
+import com.tcrnela.delivery.entity.UserRoleEnum;
 import com.tcrnela.delivery.repository.MenuRepository;
 import com.tcrnela.delivery.repository.OrderRepository;
 import com.tcrnela.delivery.repository.UserRepository;
@@ -16,6 +17,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -43,5 +46,21 @@ public class OrderService {
 
         Order order = new Order(orderRequestDto, menu, user);
         orderRepository.save(order);
+    }
+
+    public List<OrderResponseDto> get(String userid) {
+        List<Order> list = orderRepository.findAll();
+        List<Order> orders;
+        User user = userRepository.findByUserid(userid).orElseThrow();
+
+        if (user.getRole() == UserRoleEnum.OWNER) {
+            orders = orderRepository.findByMenu_Owner_Userid(userid);
+        } else {
+            orders = orderRepository.findByUser_Userid(userid);
+        }
+
+        return orders.stream()
+                .map(OrderResponseDto::new)
+                .toList();
     }
 }

@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/order")
@@ -24,8 +26,8 @@ public class OrderController {
     }
 
     @GetMapping
-    public ResponseEntity<Void> get() {
-        return null;
+    public List<OrderResponseDto> get(Authentication authentication) {
+        return orderService.get(authentication.getName());
     }
 
     @DeleteMapping
