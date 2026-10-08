@@ -2,13 +2,8 @@ package com.tcrnela.delivery.entity;
 
 import com.tcrnela.delivery.dto.SignupRequestDto;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "p_user")

@@ -13,7 +13,7 @@ public class Payment extends BaseEntity{
     private Long id;
 
     @Column(nullable = false)
-    private long price;
+    private Long price;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)

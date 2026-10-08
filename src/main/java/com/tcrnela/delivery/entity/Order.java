@@ -14,10 +14,10 @@ public class Order extends BaseEntity{
     private Long id;
 
     @Column(nullable = false)
-    private long quantity;
+    private Long quantity;
 
     @Column(nullable = false)
-    private long price;
+    private Long price;
 
     @Column(nullable = false)
     private String address;
