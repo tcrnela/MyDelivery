@@ -21,12 +21,12 @@ public class MenuController {
     // 목록 조회
     @GetMapping
     public List<MenuResponseDto> getList() {
-        return null;
+        return menuService.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<MenuResponseDto> get() {
-        return null;
+    public MenuResponseDto get(@PathVariable Long id) {
+        return menuService.find(id);
     }
 
     @PostMapping

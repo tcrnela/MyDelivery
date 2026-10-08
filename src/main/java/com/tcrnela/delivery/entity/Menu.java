@@ -34,7 +34,7 @@ public class Menu extends BaseEntity{
         this.name = menuRequestDto.getName();
         this.price = menuRequestDto.getPrice();
         this.description = menuRequestDto.getDescription();
-        //this.deleted = false;
+        this.deleted = false;
         this.owner = owner;
     }
 }
