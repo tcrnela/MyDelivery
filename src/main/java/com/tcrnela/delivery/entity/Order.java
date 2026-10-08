@@ -1,5 +1,6 @@
 package com.tcrnela.delivery.entity;
 
+import com.tcrnela.delivery.dto.OrderRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,4 +34,13 @@ public class Order extends BaseEntity{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    public Order(OrderRequestDto orderRequestDto, Menu menu, User user) {
+        this.quantity = orderRequestDto.getQuantity();
+        this.menu = menu;
+        this.address = orderRequestDto.getAddress();
+        this.status = OrderStatusEnum.ORDERED;
+        this.user = user;
+        this.price = menu.getPrice() * this.quantity;
+    }
 }
