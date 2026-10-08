@@ -23,7 +23,7 @@ public class Payment extends BaseEntity{
     @Enumerated(EnumType.STRING)
     private PaymentStatusEnum status;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
     private Order order;
 

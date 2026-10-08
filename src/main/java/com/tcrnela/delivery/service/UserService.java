@@ -15,6 +15,10 @@ public class UserService {
 
     public SignupResponseDto signup(SignupRequestDto signupRequestDto) {
         User user = new User(signupRequestDto);
+        // ID 중복 검사
+        if (userRepository.existsUserByUserid(user.getUserid())) {
+            return null;
+        }
         userRepository.save(user);
         SignupResponseDto signupResponseDto = new SignupResponseDto(user);
 

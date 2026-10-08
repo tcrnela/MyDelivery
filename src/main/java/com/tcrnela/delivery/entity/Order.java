@@ -26,11 +26,11 @@ public class Order extends BaseEntity{
     @Enumerated(EnumType.STRING)
     private OrderStatusEnum status;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "menu_id")
     private Menu menu;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 }
