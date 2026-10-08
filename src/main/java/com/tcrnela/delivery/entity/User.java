@@ -38,9 +38,9 @@ public class User extends BaseEntity{
 //        this.role = role;
 //    }
 
-    public User(SignupRequestDto signupRequestDto) {
+    public User(SignupRequestDto signupRequestDto, String encodedPassword) {
         this.userid = signupRequestDto.getUserid();
-        this.password = signupRequestDto.getPassword();
+        this.password = encodedPassword;
         this.role = signupRequestDto.getRole();
     }
 }
