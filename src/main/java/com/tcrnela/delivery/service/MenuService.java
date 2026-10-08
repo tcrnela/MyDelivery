@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
@@ -48,9 +49,32 @@ public class MenuService {
                         "존재하지 않는 메뉴입니다."
                 ));
         if (menu.isDeleted()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND,
                     "존재하지 않는 메뉴입니다.");
         }
+        return new MenuResponseDto(menu);
+    }
+
+    @Transactional
+    public MenuResponseDto update(Long id, MenuRequestDto menuRequestDto, String userid) {
+        Menu menu = menuRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "존재하지 않는 메뉴입니다."
+                ));
+        if (menu.isDeleted()) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND,
+                    "존재하지 않는 메뉴입니다.");
+        }
+        if (!menu.getOwner().getUserid().equals(userid)) {
+            throw new ResponseStatusException(
+                    HttpStatus.FORBIDDEN,
+                    "내가 생성한 메뉴가 아닙니다.");
+        }
+
+        menu.update(menuRequestDto);
         return new MenuResponseDto(menu);
     }
 }

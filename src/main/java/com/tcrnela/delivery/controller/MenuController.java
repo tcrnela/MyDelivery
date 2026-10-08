@@ -20,13 +20,18 @@ public class MenuController {
 
     // 목록 조회
     @GetMapping
-    public List<MenuResponseDto> getList() {
+    public List<MenuResponseDto> findAll() {
         return menuService.findAll();
     }
 
     @GetMapping("/{id}")
-    public MenuResponseDto get(@PathVariable Long id) {
+    public MenuResponseDto find(@PathVariable Long id) {
         return menuService.find(id);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<MenuResponseDto> update(@PathVariable Long id, @Valid @RequestBody MenuRequestDto menuRequestDto, Authentication authentication) {
+        return ResponseEntity.ok(menuService.update(id, menuRequestDto, authentication.getName()));
     }
 
     @PostMapping

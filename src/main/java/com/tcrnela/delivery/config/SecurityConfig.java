@@ -30,6 +30,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/users", "/api/users/login").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/menus", "/api/menus/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/menus", "/api/menus/**").hasRole("OWNER")
+                        .requestMatchers(HttpMethod.PUT,  "/api/menus/**").hasRole("OWNER")
                         // 인증단계
                         .anyRequest().authenticated()
                 )

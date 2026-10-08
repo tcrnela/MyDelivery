@@ -13,5 +13,5 @@ public class MenuRequestDto {
     @Positive
     private Long price;
     private String description;
-
+    private boolean deleted = false;
 }
