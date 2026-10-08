@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "p_order")
 @Getter
 @NoArgsConstructor
-public class Order {
+public class Order extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
