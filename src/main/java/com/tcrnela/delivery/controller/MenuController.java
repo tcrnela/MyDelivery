@@ -34,6 +34,11 @@ public class MenuController {
         return ResponseEntity.ok(menuService.update(id, menuRequestDto, authentication.getName()));
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<MenuResponseDto> delete(@PathVariable Long id, Authentication authentication) {
+        return ResponseEntity.ok(menuService.delete(id, authentication.getName()));
+    }
+
     @PostMapping
     public ResponseEntity<Void> create(@Valid @RequestBody MenuRequestDto menuRequestDto, Authentication authentication) {
         menuService.create(menuRequestDto, authentication.getName());

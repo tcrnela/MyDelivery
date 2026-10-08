@@ -43,4 +43,8 @@ public class Menu extends BaseEntity{
         this.price = menuRequestDto.getPrice();
         this.description = menuRequestDto.getDescription();
     }
+
+    public void delete() {
+        this.deleted = true;
+    }
 }

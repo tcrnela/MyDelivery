@@ -77,4 +77,26 @@ public class MenuService {
         menu.update(menuRequestDto);
         return new MenuResponseDto(menu);
     }
+
+    @Transactional
+    public MenuResponseDto delete(Long id, String userid) {
+        Menu menu = menuRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "존재하지 않는 메뉴입니다."
+                ));
+        if (menu.isDeleted()) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND,
+                    "존재하지 않는 메뉴입니다.");
+        }
+        if (!menu.getOwner().getUserid().equals(userid)) {
+            throw new ResponseStatusException(
+                    HttpStatus.FORBIDDEN,
+                    "내가 생성한 메뉴가 아닙니다.");
+        }
+
+        menu.delete();
+        return new MenuResponseDto(menu);
+    }
 }
