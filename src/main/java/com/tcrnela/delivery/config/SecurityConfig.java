@@ -2,6 +2,7 @@ package com.tcrnela.delivery.config;
 
 import com.tcrnela.delivery.jwt.JwtAuthenticationFilter;
 import com.tcrnela.delivery.jwt.JwtService;
+import jakarta.servlet.DispatcherType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,6 +26,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         // 인가단계
+                        .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll() // ??
                         .requestMatchers(HttpMethod.POST, "/api/users", "/api/users/login").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/menus", "/api/menus/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/menus", "/api/menus/**").hasRole("OWNER")
