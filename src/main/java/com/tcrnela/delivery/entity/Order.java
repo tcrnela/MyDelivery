@@ -43,4 +43,8 @@ public class Order extends BaseEntity{
         this.user = user;
         this.price = menu.getPrice() * this.quantity;
     }
+
+    public void delete() {
+        this.status = OrderStatusEnum.CANCELED;
+    }
 }

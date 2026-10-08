@@ -3,10 +3,7 @@ package com.tcrnela.delivery.service;
 import com.tcrnela.delivery.dto.MenuRequestDto;
 import com.tcrnela.delivery.dto.OrderRequestDto;
 import com.tcrnela.delivery.dto.OrderResponseDto;
-import com.tcrnela.delivery.entity.Menu;
-import com.tcrnela.delivery.entity.Order;
-import com.tcrnela.delivery.entity.User;
-import com.tcrnela.delivery.entity.UserRoleEnum;
+import com.tcrnela.delivery.entity.*;
 import com.tcrnela.delivery.repository.MenuRepository;
 import com.tcrnela.delivery.repository.OrderRepository;
 import com.tcrnela.delivery.repository.UserRepository;
@@ -15,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
@@ -62,5 +60,24 @@ public class OrderService {
         return orders.stream()
                 .map(OrderResponseDto::new)
                 .toList();
+    }
+
+    @Transactional
+    public void delete(Long id, String userid) {
+        User user = userRepository.findByUserid(userid).orElseThrow();
+        Order order = orderRepository.findById(id).orElseThrow();
+        if (!order.getUser().equals(user)) {
+            throw new ResponseStatusException(
+                    HttpStatus.UNAUTHORIZED,
+                    "나의 주문이 아닙니다."
+            );
+        }
+        if (!order.getStatus().equals(OrderStatusEnum.ORDERED)) {
+            throw new ResponseStatusException(
+                    HttpStatus.CONFLICT,
+                    "처리 완료된 건입니다."
+            );
+        }
+        order.delete();
     }
 }

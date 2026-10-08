@@ -32,6 +32,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/menus", "/api/menus/**").hasRole("OWNER")
                         .requestMatchers(HttpMethod.POST, "/api/order").hasRole("CUSTOMER")
                         .requestMatchers(HttpMethod.PUT,  "/api/menus/**").hasRole("OWNER")
+                        .requestMatchers(HttpMethod.DELETE,  "/api/menus/**").hasRole("OWNER")
                         // 인증단계
                         .anyRequest().authenticated()
                 )

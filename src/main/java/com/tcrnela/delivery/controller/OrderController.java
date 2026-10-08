@@ -30,9 +30,9 @@ public class OrderController {
         return orderService.get(authentication.getName());
     }
 
-    @DeleteMapping
-    public ResponseEntity<Void> delete() {
-        return null;
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id, Authentication authentication) {
+        orderService.delete(id, authentication.getName());
     }
 
     @PutMapping
